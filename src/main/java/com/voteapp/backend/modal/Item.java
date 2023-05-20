@@ -1,23 +1,23 @@
 package com.voteapp.backend.modal;
 
-import javax.persistence.*;
+import lombok.*;
+import jakarta.persistence.*;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "items")
+
 public class Item {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  private long id;
+  private int id;
 
   @Column(name = "name")
   private String name;
 
-  public Item(String name) {
-    this.name = name;
-  }
-
-  public long getId() {
+  public int getId() {
     return id;
   }
 
