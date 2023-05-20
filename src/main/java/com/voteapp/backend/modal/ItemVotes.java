@@ -20,6 +20,10 @@ public class ItemVotes {
   @Column(name = "voteCount")
   private int voteCount;
 
+  public int getId() {
+    return id;
+  }
+
   public void setName(String name) {
     this.name = name;
   }
