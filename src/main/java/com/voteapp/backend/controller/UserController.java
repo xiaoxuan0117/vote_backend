@@ -19,7 +19,6 @@ public class UserController {
   @GetMapping("/user/{name}")
   public ResponseEntity<List<Integer>> getUserDetail(@PathVariable("name") String name) {
     try {
-      System.out.println(userRepository.getUserDetail(name));
       return new ResponseEntity<>(userRepository.getUserDetail(name), HttpStatus.OK);
     } catch (Exception e) {
       e.printStackTrace();
