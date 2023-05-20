@@ -23,4 +23,9 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
   @Modifying
   @Query(nativeQuery = true, value = "call removeItem(:id)")
   void removeItem(@Param("id") int id);
+
+  @Transactional
+  @Modifying
+  @Query(nativeQuery = true, value = "call updateItem(:newName, :itemId)")
+  void updateItem(@Param("newName") String newName, @Param("itemId") int itemId);
 }
