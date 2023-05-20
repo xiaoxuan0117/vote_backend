@@ -20,7 +20,7 @@ public class ItemController {
   @Autowired
   ItemVotesRepository itemVotesRepository;
 
-  @GetMapping("/items")
+  @GetMapping("/item")
   public ResponseEntity<List<Item>> getItems() {
     try {
       return new ResponseEntity<>(itemRepository.getItems(), HttpStatus.OK);
@@ -51,7 +51,7 @@ public class ItemController {
     }
   }
 
-  @DeleteMapping("/items/{id}")
+  @DeleteMapping("/item/{id}")
   public ResponseEntity<HttpStatus> removeOldItem(@PathVariable("id") int id) {
     try {
       itemRepository.removeItem(id);
