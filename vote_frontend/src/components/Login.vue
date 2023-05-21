@@ -72,6 +72,10 @@ export default {
   font-weight:900;
   color: #416586;
   margin-bottom: 20px;
+
+  @media screen and (max-width: 768px) {
+    font-size: 36px;
+  }
 }
 
 button {

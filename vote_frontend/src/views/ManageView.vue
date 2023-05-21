@@ -18,6 +18,7 @@
 
 <script>
 import EditItemComponent from '@/components/EditItem.vue';
+import { validateInput } from  '@/utils/index.js';
 export default {
   name: 'VoteView',
   components: {
@@ -42,6 +43,7 @@ export default {
       }
     },
     async removeItem({itemId}){
+      if(!validateInput(itemId, 'number')) return alert('請選擇正確的項目編號');
       try{
         const data = await fetch(`${process.env.VUE_APP_BACKEND_URL}/api/item/${itemId}`, {
           method: 'DELETE',
@@ -60,6 +62,7 @@ export default {
       }
     },
     async addItem(){
+      if(!validateInput(this.newItemName, 'string')) return alert('請輸入正確格式');
       try{
         const data = await fetch(`${process.env.VUE_APP_BACKEND_URL}/api/item`, {
           method: 'POST',
@@ -81,6 +84,7 @@ export default {
       }
     },
     async updateItem({newName, itemId}){
+      if(!validateInput(newName, 'string') || !validateInput(itemId, 'number')) return alert('請輸入正確格式');
       try{
         const data = await fetch(`${process.env.VUE_APP_BACKEND_URL}/api/item`, {
           method: 'PATCH',
@@ -124,6 +128,10 @@ export default {
   & .content {
     width: 40%;
     text-align: start;
+
+    @media screen and (max-width: 768px) {
+    width: 100%;
+    }
   }
 }
 .title {

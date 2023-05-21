@@ -67,6 +67,7 @@ export default {
 
 .info {
   display: flex;
+  flex-flow: wrap;
   flex-direction: row;
   align-items: center;
   gap: 10px;

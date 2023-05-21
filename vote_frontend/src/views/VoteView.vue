@@ -19,6 +19,7 @@
 
 <script>
 import ItemComponent from '@/components/Item.vue';
+import { validateInput } from  '@/utils/index.js';
 export default {
   name: 'VoteView',
   components: {
@@ -53,6 +54,7 @@ export default {
       }
     },
     async userDetail(){
+      if(validateInput(this.user.name, 'string') === false) return alert('請使用正確的使用者名稱')
       try{
         const data = await fetch(`${process.env.VUE_APP_BACKEND_URL}/api/user/${this.user.name}`).then(res => res.json());
         this.user.hasVote = data;
@@ -61,6 +63,7 @@ export default {
       }
     },
     async removeRecord({itemId}){
+      if(!validateInput(itemId, 'number')) return alert('請選擇正確的項目編號');
       try{
         const data = await fetch(`${process.env.VUE_APP_BACKEND_URL}/api/record/${this.user.name}/${itemId}`, {
           method: 'DELETE',
@@ -80,6 +83,7 @@ export default {
       }
     },
     async addRecord({itemId}){
+      if(!validateInput(itemId, 'number')) return alert('請選擇正確的項目編號');
       try{
         const data = await fetch(`${process.env.VUE_APP_BACKEND_URL}/api/record`, {
           method: 'POST',
@@ -132,6 +136,10 @@ export default {
   & .content {
     width: 40%;
     text-align: start;
+
+    @media screen and (max-width: 768px) {
+      width: 100%;
+    }
   }
 }
 .title {
