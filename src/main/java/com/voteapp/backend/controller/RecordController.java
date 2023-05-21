@@ -7,6 +7,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 @CrossOrigin
 @RestController
 public class RecordController {
@@ -15,6 +18,11 @@ public class RecordController {
 
   @PostMapping("/record")
   public ResponseEntity<HttpStatus> addNewRecord(@RequestBody Record Record) {
+    Pattern pattern = Pattern.compile("^[\\w\u4e00-\u9fa5]*$");
+    Matcher matcher = pattern.matcher(Record.getName());
+    if (!matcher.matches()) {
+      return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
     try {
       RecordRepository.addRecord(Record.getName(), Record.getItemId());
       return new ResponseEntity<>(HttpStatus.OK);
@@ -27,6 +35,11 @@ public class RecordController {
   @DeleteMapping("/record/{username}/{itemId}")
   public ResponseEntity<HttpStatus> removeOldRecord(@PathVariable("username") String username,
       @PathVariable("itemId") int itemId) {
+    Pattern pattern = Pattern.compile("^[\\w\u4e00-\u9fa5]*$");
+    Matcher matcher = pattern.matcher(username);
+    if (!matcher.matches()) {
+      return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
     try {
       RecordRepository.removeRecord(username, itemId);
       return new ResponseEntity<>(HttpStatus.OK);

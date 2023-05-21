@@ -10,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @CrossOrigin
 @RestController
@@ -32,6 +34,12 @@ public class ItemController {
 
   @PostMapping("/item")
   public ResponseEntity<HttpStatus> addNewItem(@RequestBody Item item) {
+    Pattern pattern = Pattern.compile("^[\\w\u4e00-\u9fa5]*$");
+    Matcher matcher = pattern.matcher(item.getName());
+    if (!matcher.matches()) {
+      return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
     try {
       itemRepository.addItem(item.getName());
       return new ResponseEntity<>(HttpStatus.OK);
@@ -54,6 +62,11 @@ public class ItemController {
 
   @PatchMapping("/item")
   public ResponseEntity<HttpStatus> updateItem(@RequestBody UpdateItem data) {
+    Pattern pattern = Pattern.compile("^[\\w\u4e00-\u9fa5]*$");
+    Matcher matcher = pattern.matcher(data.getNewName());
+    if (!matcher.matches()) {
+      return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
     try {
       itemRepository.updateItem(data.getNewName(), data.getItemId());
       return new ResponseEntity<>(HttpStatus.OK);
